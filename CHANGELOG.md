@@ -1,5 +1,21 @@
 # Changelog
 
+## v2.1.2 -- 2026-04-09
+
+### Fix escaped JSON reverse mapping in SSE tool_use args (closes #11)
+
+**Changes:**
+- `reverseMap()` now handles both plain (`"Name"`) and escaped (`\"Name\"`) quote
+  forms when reversing tool name and property name renames.
+- SSE `input_json_delta` events embed tool arguments inside a `partial_json` string
+  field where inner quotes are escaped. Without the escaped variant, renamed arg keys
+  like `\"SendMessage\"` were never reverted to `\"message\"`, causing OpenClaw's tool
+  runtime to fail with "message required".
+
+**Inspired by:** PR #16 (kokoima) which identified the bug and provided the fix approach.
+
+---
+
 ## v2.1.1 -- 2026-04-09
 
 ### Strip trailing assistant prefill (Opus 4.6 compatibility)
